@@ -1,0 +1,14 @@
+{
+  "datacenter":"${datacenter}",
+  "bind_addr": "0.0.0.0",
+  "advertise_addr": "${advertise_addr}",
+  "addresses": {
+    "http": "0.0.0.0"
+  },
+  "data_dir": "/mnt/consul",
+  "disable_remote_exec": true,
+  "disable_update_check": true,
+  "leave_on_terminate": true,
+  "retry_join": [ "provider=azure resource_group=${resource_group} vm_scale_set=${vm_scale_sets.consul_servers} tenant_id=${azure.tenant_id} client_id=${azure.client_id} subscription_id=${azure.subscription_id} secret_access_key=${azure.client_secret}" ],
+  "server": false
+}
