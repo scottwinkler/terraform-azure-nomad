@@ -1,9 +1,9 @@
-output "lb_dns_names" {
+output "addresses" {
   value = {
-    consul = "${azurerm_public_ip.consul_public_ip.fqdn}:8500"
-    nomad  = "${azurerm_public_ip.nomad_public_ip.fqdn}:4646"
-    fabio  = "${azurerm_public_ip.application_public_ip.fqdn}:9998"
-    mongo  = "${azurerm_public_ip.application_public_ip.fqdn}:27017"
+    consul_ui = "${azurerm_public_ip.consul_public_ip.fqdn}:8500"
+    nomad_ui  = "${azurerm_public_ip.nomad_public_ip.fqdn}:4646"
+    fabio_ui  = "${azurerm_public_ip.fabio_public_ip.fqdn}:9998"
+    fabio_db  = "${azurerm_public_ip.fabio_public_ip.fqdn}:27017"
   }
 }
 
@@ -11,7 +11,7 @@ output "lb_backend_address_pool_ids" {
   value = {
     consul = [azurerm_lb_backend_address_pool.consul_address_pool.id]
     nomad  = [azurerm_lb_backend_address_pool.nomad_address_pool.id]
-    app    = [azurerm_lb_backend_address_pool.application_address_pool.id]
+    fabio  = [azurerm_lb_backend_address_pool.fabio_address_pool.id]
   }
 }
 

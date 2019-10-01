@@ -20,8 +20,8 @@ resource "azurerm_subnet" "vm_subnet" {
   }
 }
 
-resource "azurerm_network_security_group" "consul_sg" {
-  name                = "${var.namespace}-consul-sg"
+resource "azurerm_network_security_group" "consul_server_sg" {
+  name                = "${var.namespace}-consul-server-sg"
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -72,8 +72,8 @@ resource "azurerm_network_security_group" "consul_sg" {
   }
 }
 
-resource "azurerm_network_security_group" "nomad_sg" {
-  name                = "${var.namespace}-nomad-sg"
+resource "azurerm_network_security_group" "nomad_server_sg" {
+  name                = "${var.namespace}-nomad-server-sg"
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -191,7 +191,7 @@ resource "azurerm_network_security_group" "nomad_client_sg" {
   }
 
   security_rule {
-    name                       = "app_ui"
+    name                       = "fabio_ui"
     priority                   = 105
     direction                  = "Inbound"
     access                     = "Allow"
@@ -203,7 +203,7 @@ resource "azurerm_network_security_group" "nomad_client_sg" {
   }
 
   security_rule {
-    name                       = "app_lb"
+    name                       = "fabio_lb"
     priority                   = 106
     direction                  = "Inbound"
     access                     = "Allow"
@@ -215,7 +215,7 @@ resource "azurerm_network_security_group" "nomad_client_sg" {
   }
 
   security_rule {
-    name                       = "app_db"
+    name                       = "fabio_db"
     priority                   = 107
     direction                  = "Inbound"
     access                     = "Allow"

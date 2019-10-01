@@ -40,7 +40,7 @@ module "consul_servers" {
   associate_public_ips        = var.associate_public_ips
   namespace                   = module.resourcegroup.namespace
   vpc                         = module.networking.vpc
-  security_group_id           = module.networking.sg.consul
+  security_group_id           = module.networking.sg.consul_server
   resource_group_name         = module.resourcegroup.resource_group_name
   lb_backend_address_pool_ids = module.loadbalancing.lb_backend_address_pool_ids.consul
 }
@@ -67,7 +67,7 @@ module "nomad_servers" {
   associate_public_ips        = var.associate_public_ips
   namespace                   = module.resourcegroup.namespace
   vpc                         = module.networking.vpc
-  security_group_id           = module.networking.sg.nomad
+  security_group_id           = module.networking.sg.nomad_server
   resource_group_name         = module.resourcegroup.resource_group_name
   lb_backend_address_pool_ids = module.loadbalancing.lb_backend_address_pool_ids.nomad
 }
@@ -96,5 +96,5 @@ module "nomad_clients" {
   vpc                         = module.networking.vpc
   security_group_id           = module.networking.sg.nomad_client
   resource_group_name         = module.resourcegroup.resource_group_name
-  lb_backend_address_pool_ids = module.loadbalancing.lb_backend_address_pool_ids.app
+  lb_backend_address_pool_ids = module.loadbalancing.lb_backend_address_pool_ids.fabio
 }

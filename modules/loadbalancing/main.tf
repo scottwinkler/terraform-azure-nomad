@@ -96,75 +96,75 @@ resource "azurerm_lb_rule" "nomad_ui_rule" {
   probe_id                       = azurerm_lb_probe.nomad_probe.id
 }
 
-# application load balancer
-resource "azurerm_public_ip" "application_public_ip" {
-  name                = "${var.namespace}-app-public_ip"
+# fabio load balancer
+resource "azurerm_public_ip" "fabio_public_ip" {
+  name                = "${var.namespace}-fabio-public_ip"
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Static"
-  domain_name_label   = "${var.namespace}-app"
+  domain_name_label   = "${var.namespace}-fabio"
   sku                 = "Standard"
 }
 
-resource "azurerm_lb" "application_lb_external" {
-  name                = "${var.namespace}-app"
+resource "azurerm_lb" "fabio_lb_external" {
+  name                = "${var.namespace}-fabio"
   location            = var.location
   resource_group_name = var.resource_group_name
 
   frontend_ip_configuration {
     name                 = "PublicIPAddress"
-    public_ip_address_id = azurerm_public_ip.application_public_ip.id
+    public_ip_address_id = azurerm_public_ip.fabio_public_ip.id
   }
   sku = "Standard"
 }
 
-resource "azurerm_lb_backend_address_pool" "application_address_pool" {
+resource "azurerm_lb_backend_address_pool" "fabio_address_pool" {
   resource_group_name = var.resource_group_name
-  loadbalancer_id     = azurerm_lb.application_lb_external.id
-  name                = "${var.namespace}-app-pool"
+  loadbalancer_id     = azurerm_lb.fabio_lb_external.id
+  name                = "${var.namespace}-fabio-pool"
 }
 
-resource "azurerm_lb_probe" "application_probe" {
+resource "azurerm_lb_probe" "fabio_probe" {
   resource_group_name = var.resource_group_name
-  loadbalancer_id     = azurerm_lb.application_lb_external.id
-  name                = "${var.namespace}-app-probe"
+  loadbalancer_id     = azurerm_lb.fabio_lb_external.id
+  name                = "${var.namespace}-fabio-probe"
   protocol            = "HTTP"
   port                = "9998"
   request_path        = "/routes"
 }
 
-resource "azurerm_lb_rule" "application_ui_rule" {
+resource "azurerm_lb_rule" "fabio_ui_rule" {
   resource_group_name            = var.resource_group_name
-  name                           = "${var.namespace}-app-ui"
-  loadbalancer_id                = azurerm_lb.application_lb_external.id
+  name                           = "${var.namespace}-fabio-ui"
+  loadbalancer_id                = azurerm_lb.fabio_lb_external.id
   protocol                       = "TCP"
   frontend_port                  = "9998"
   backend_port                   = "9998"
   frontend_ip_configuration_name = "PublicIPAddress"
-  backend_address_pool_id        = azurerm_lb_backend_address_pool.application_address_pool.id
-  probe_id                       = azurerm_lb_probe.application_probe.id
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.fabio_address_pool.id
+  probe_id                       = azurerm_lb_probe.fabio_probe.id
 }
 
-resource "azurerm_lb_rule" "application_lb_rule" {
+resource "azurerm_lb_rule" "fabio_lb_rule" {
   resource_group_name            = var.resource_group_name
-  name                           = "${var.namespace}-app-lb"
-  loadbalancer_id                = azurerm_lb.application_lb_external.id
+  name                           = "${var.namespace}-fabio-lb"
+  loadbalancer_id                = azurerm_lb.fabio_lb_external.id
   protocol                       = "TCP"
   frontend_port                  = "9999"
   backend_port                   = "9999"
   frontend_ip_configuration_name = "PublicIPAddress"
-  backend_address_pool_id        = azurerm_lb_backend_address_pool.application_address_pool.id
-  probe_id                       = azurerm_lb_probe.application_probe.id
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.fabio_address_pool.id
+  probe_id                       = azurerm_lb_probe.fabio_probe.id
 }
 
-resource "azurerm_lb_rule" "application_db_rule" {
+resource "azurerm_lb_rule" "fabio_db_rule" {
   resource_group_name            = var.resource_group_name
-  name                           = "${var.namespace}-app-db"
-  loadbalancer_id                = azurerm_lb.application_lb_external.id
+  name                           = "${var.namespace}-fabio-db"
+  loadbalancer_id                = azurerm_lb.fabio_lb_external.id
   protocol                       = "TCP"
   frontend_port                  = "27017"
   backend_port                   = "27017"
   frontend_ip_configuration_name = "PublicIPAddress"
-  backend_address_pool_id        = azurerm_lb_backend_address_pool.application_address_pool.id
-  probe_id                       = azurerm_lb_probe.application_probe.id
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.fabio_address_pool.id
+  probe_id                       = azurerm_lb_probe.fabio_probe.id
 }
