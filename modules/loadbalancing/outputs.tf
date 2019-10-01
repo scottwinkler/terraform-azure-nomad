@@ -2,7 +2,8 @@ output "lb_dns_names" {
   value = {
     consul = "${azurerm_public_ip.consul_public_ip.fqdn}:8500"
     nomad  = "${azurerm_public_ip.nomad_public_ip.fqdn}:4646"
-    app    = "${azurerm_public_ip.application_public_ip.fqdn}:9998"
+    fabio  = "${azurerm_public_ip.application_public_ip.fqdn}:9998"
+    mongo  = "${azurerm_public_ip.application_public_ip.fqdn}:27017"
   }
 }
 
