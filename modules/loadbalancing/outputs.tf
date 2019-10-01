@@ -1,9 +1,9 @@
 output "addresses" {
   value = {
-    consul_ui = "${azurerm_public_ip.consul_public_ip.fqdn}:8500"
-    nomad_ui  = "${azurerm_public_ip.nomad_public_ip.fqdn}:4646"
-    fabio_ui  = "${azurerm_public_ip.fabio_public_ip.fqdn}:9998"
-    fabio_db  = "${azurerm_public_ip.fabio_public_ip.fqdn}:27017"
+    consul_ui = "http://${azurerm_public_ip.consul_public_ip.fqdn}:8500"
+    nomad_ui  = "http://${azurerm_public_ip.nomad_public_ip.fqdn}:4646"
+    fabio_ui  = "http://${azurerm_public_ip.fabio_public_ip.fqdn}:9998"
+    fabio_db  = "tcp://${azurerm_public_ip.fabio_public_ip.fqdn}:27017"
   }
 }
 
