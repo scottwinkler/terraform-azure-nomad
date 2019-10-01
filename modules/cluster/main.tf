@@ -102,7 +102,7 @@ resource "azurerm_virtual_machine_scale_set" "scale_set" {
 
   boot_diagnostics {
     enabled     = true
-    storage_uri = var.storage_uri
+    storage_uri = azurerm_storage_account.storage_account.primary_blob_endpoint
   }
 }
 
