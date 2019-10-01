@@ -3,11 +3,6 @@ variable "namespace" {
   type    = string
 }
 
-variable "location" {
-  default = "westus2"
-  type    = string
-}
-
 variable "datacenter" {
   default = "azure"
   type    = string
@@ -20,7 +15,7 @@ variable "join_wan" {
 
 variable "associate_public_ips" {
   default = true
-  type = bool
+  type    = bool
 }
 
 variable "azure" {
@@ -29,6 +24,7 @@ variable "azure" {
     client_id       = string
     client_secret   = string
     tenant_id       = string
+    location        = string
   })
 }
 
