@@ -49,15 +49,15 @@ resource "azurerm_storage_account" "storage_account" {
 
 resource "azurerm_virtual_machine_scale_set" "scale_set" {
   upgrade_policy_mode = "Automatic"
-  name                = var.namespace
+  name                = local.namespace
   resource_group_name = var.resource_group_name
   location            = var.location
   network_profile {
-    name                      = "${var.namespace}-NetworkProfile"
+    name                      = "${local.namespace}-NetworkProfile"
     primary                   = true
     network_security_group_id = var.security_group_id
     ip_configuration {
-      name = "${var.namespace}-IPConfiguration"
+      name = "${local.namespace}-IPConfiguration"
 
       primary                                = true
       subnet_id                              = var.vpc.subnets[0].id
@@ -66,13 +66,13 @@ resource "azurerm_virtual_machine_scale_set" "scale_set" {
       public_ip_address_configuration {
         name              = "PublicIPConfiguration"
         idle_timeout      = 5
-        domain_name_label = lower(var.namespace)
+        domain_name_label = lower(local.namespace)
       }
     }
   }
 
   os_profile {
-    computer_name_prefix = var.namespace
+    computer_name_prefix = local.namespace
     admin_username       = var.admin.username
     admin_password       = var.admin.password
     custom_data          = local.startup
@@ -107,14 +107,14 @@ resource "azurerm_virtual_machine_scale_set" "scale_set" {
 }
 
 resource "azurerm_monitor_autoscale_setting" "autoscale_setting" {
-  name                = "${var.namespace}-AutoscaleSetting"
+  name                = "${local.namespace}-AutoscaleSetting"
   enabled             = true
   resource_group_name = var.resource_group_name
   location            = var.location
   target_resource_id  = azurerm_virtual_machine_scale_set.scale_set.id
 
   profile {
-    name = "${var.namespace}-Profile"
+    name = "${local.namespace}-Profile"
 
     capacity {
       default = var.instance_count
