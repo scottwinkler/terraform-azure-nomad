@@ -4,7 +4,7 @@ resource "azurerm_virtual_network" "virtual_network" {
   location            = var.location
   resource_group_name = var.resource_group_name
   provisioner "local-exec" {
-    when    = "destroy"
+    when    = destroy
     command = "sleep 30"
   }
 }
@@ -15,7 +15,7 @@ resource "azurerm_subnet" "vm_subnet" {
   virtual_network_name = azurerm_virtual_network.virtual_network.name
   address_prefix       = "172.16.0.0/24"
   provisioner "local-exec" {
-    when    = "destroy"
+    when    = destroy
     command = "sleep 30"
   }
 }
